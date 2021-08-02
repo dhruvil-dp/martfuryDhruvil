@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getProductsByCollectionHelper } from '~/utilities/strapi-fetch-data-helpers';
 import ContainerMarketPlace from '~/components/layouts/ContainerMarketPlace';
 import MarketPlaceHomeBanner from '~/components/partials/homepage/marketplace/MartketPlaceHomeBanner';
 import MarketPlaceSiteFeatures from '~/components/partials/homepage/marketplace/MarketPlaceSiteFeatures';
@@ -13,6 +14,125 @@ import MarketHeathyAndBeauty from '~/components/partials/homepage/marketplace/mo
 
 
 const HomeMarketPlacePage = () => {
+    const [cAproductItems, setcAProductItems] = useState(null);
+    const [cEproductItems, setcEProductItems] = useState(null);
+    const [cTproductItems, setcTProductItems] = useState(null);
+    const [gKproductItems, setgKProductItems] = useState(null);
+    const [hBproductItems, sethBProductItems] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    async function getcAProducts() {
+        setLoading(true);
+        const responseData = await getProductsByCollectionHelper(
+            "clothings"
+        );
+        if (responseData) {
+            setcAProductItems(responseData.items);
+            setTimeout(
+                function () {
+                    setLoading(false);
+                }.bind(this),
+                250
+            );
+        }
+    }
+    async function getcEProducts() {
+        setLoading(true);
+        const responseData = await getProductsByCollectionHelper(
+            "consumer-electronics"
+        );
+        if (responseData) {
+            setcEProductItems(responseData.items);
+            setTimeout(
+                function () {
+                    setLoading(false);
+                }.bind(this),
+                250
+            );
+        }
+    }
+    async function getcTProducts() {
+        setLoading(true);
+        const responseData = await getProductsByCollectionHelper(
+            "customer-bought-products"
+        );
+        if (responseData) {
+            setcTProductItems(responseData.items);
+            setTimeout(
+                function () {
+                    setLoading(false);
+                }.bind(this),
+                250
+            );
+        }
+    }
+    async function getgKProducts() {
+        setLoading(true);
+        const responseData = await getProductsByCollectionHelper(
+            "garden-and-kitchen"
+        );
+        if (responseData) {
+            setgKProductItems(responseData.items);
+            setTimeout(
+                function () {
+                    setLoading(false);
+                }.bind(this),
+                250
+            );
+        }
+    }
+    async function gethBProducts() {
+        setLoading(true);
+        const responseData = await getProductsByCollectionHelper(
+            "health-and-beauty"
+        );
+        if (responseData) {
+            sethBProductItems(responseData.items);
+            setTimeout(
+                function () {
+                    setLoading(false);
+                }.bind(this),
+                250
+            );
+        }
+    }
+
+    useEffect(() => {
+        getcAProducts();
+        getcEProducts();
+        getcTProducts();
+        getgKProducts();
+        gethBProducts();
+    }, []);
+    // Views
+    let cAproductItemsView;
+    let cEproductItemsView;
+    let cTproductItemsView;
+    let gKproductItemsView;
+    let hBproductItemsView;
+    if (!loading) {
+        
+        if (cAproductItems && cAproductItems.length > 0) {
+            cAproductItemsView = <MarketClothingsAndApparel collectionSlug="clothings" />;
+        }
+        
+        if (cEproductItems && cEproductItems.length > 0) {
+            cEproductItemsView = <MarketConsumerElectronics collectionSlug="consumer-electronics" />;
+        }
+        
+        if (cTproductItems && cTproductItems.length > 0) {
+            cTproductItemsView = <MarketComputerAndTechnology collectionSlug="customer-bought-products" />;
+        }
+        
+        if (gKproductItems && gKproductItems.length > 0) {
+            gKproductItemsView = <MarketGardenAndKitchen collectionSlug="garden-and-kitchen" />;
+        }
+        
+        if (hBproductItems && hBproductItems.length > 0) {
+            hBproductItemsView = <MarketHeathyAndBeauty collectionSlug="health-and-beauty" />;
+        }
+        
+    }
     return (
         <ContainerMarketPlace title="Home Market Place">
             <MarketPlaceHomeBanner />
@@ -23,11 +143,11 @@ const HomeMarketPlacePage = () => {
             <div className="ps-section--gray">
                 <div className="container">
                     
-                    <MarketClothingsAndApparel collectionSlug="clothings" />
-                    <MarketConsumerElectronics collectionSlug="consumer-electronics" />
-                    <MarketComputerAndTechnology collectionSlug="customer-bought-products" />
-                    <MarketGardenAndKitchen collectionSlug="garden-and-kitchen" />
-                    <MarketHeathyAndBeauty collectionSlug="health-and-beauty" />
+                    {cAproductItemsView}
+                    {cEproductItemsView}
+                    {cTproductItemsView}
+                    {gKproductItemsView}
+                    {hBproductItemsView}
                 </div>
             </div>
             {/*  <MarketPlaceProductBox />*/}
