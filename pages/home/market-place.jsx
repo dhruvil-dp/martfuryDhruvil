@@ -105,34 +105,8 @@ const HomeMarketPlacePage = () => {
         gethBProducts();
     }, []);
     // Views
-    let cAproductItemsView;
-    let cEproductItemsView;
-    let cTproductItemsView;
-    let gKproductItemsView;
-    let hBproductItemsView;
-    if (!loading) {
-        
-        if (cAproductItems && cAproductItems.length > 0) {
-            cAproductItemsView = <MarketClothingsAndApparel collectionSlug="clothings" />;
-        }
-        
-        if (cEproductItems && cEproductItems.length > 0) {
-            cEproductItemsView = <MarketConsumerElectronics collectionSlug="consumer-electronics" />;
-        }
-        
-        if (cTproductItems && cTproductItems.length > 0) {
-            cTproductItemsView = <MarketComputerAndTechnology collectionSlug="customer-bought-products" />;
-        }
-        
-        if (gKproductItems && gKproductItems.length > 0) {
-            gKproductItemsView = <MarketGardenAndKitchen collectionSlug="garden-and-kitchen" />;
-        }
-        
-        if (hBproductItems && hBproductItems.length > 0) {
-            hBproductItemsView = <MarketHeathyAndBeauty collectionSlug="health-and-beauty" />;
-        }
-        
-    }
+
+    
     return (
         <ContainerMarketPlace title="Home Market Place">
             <MarketPlaceHomeBanner />
@@ -143,11 +117,11 @@ const HomeMarketPlacePage = () => {
             <div className="ps-section--gray">
                 <div className="container">
                     
-                    {cAproductItemsView}
-                    {cEproductItemsView}
-                    {cTproductItemsView}
-                    {gKproductItemsView}
-                    {hBproductItemsView}
+                    {cAproductItems ? <MarketClothingsAndApparel collectionSlug="clothings" /> : ''}
+                    {cEproductItems ? <MarketConsumerElectronics collectionSlug="consumer-electronics" /> : ''}
+                    {cTproductItems ? <MarketComputerAndTechnology collectionSlug="customer-bought-products" /> : ''}
+                    {gKproductItems ? <MarketGardenAndKitchen collectionSlug="garden-and-kitchen" /> : ''}
+                    {hBproductItems ? <MarketHeathyAndBeauty collectionSlug="health-and-beauty" /> : ''}
                 </div>
             </div>
             {/*  <MarketPlaceProductBox />*/}
@@ -155,3 +129,4 @@ const HomeMarketPlacePage = () => {
     );
 };
 export default HomeMarketPlacePage;
+
